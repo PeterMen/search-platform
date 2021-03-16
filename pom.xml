@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.peter.search</groupId>
+	<artifactId>search-platform</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.5.RELEASE</version>
+		<relativePath />
+	</parent>
+
+	<modules>
+        <module>search-gateway</module>
+        <module>search-dao</module>
+        <module>search-service</module>
+		<module>search-api</module>
+		<module>search-manager</module>
+	</modules>
+
+	<properties>
+		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+		<springfox-swagger2.version>2.7.0</springfox-swagger2.version>
+		<mapper-spring-boot-starter.version>2.1.3</mapper-spring-boot-starter.version>
+		<mybatis-generator-core.version>1.3.5</mybatis-generator-core.version>
+		<mybatis-paginator.version>1.2.17</mybatis-paginator.version>
+		<mybatis.version>3.4.6</mybatis.version>
+		<mysql-connector-java.version>5.1.44</mysql-connector-java.version>
+		<fastjson.version>1.2.54</fastjson.version>
+		<lombok.version>1.16.18</lombok.version>
+		<rocketmq-client.vserion>3.2.6</rocketmq-client.vserion>
+		<elasticsearch.version>6.5.1</elasticsearch.version>
+		<commons-collections4.version>4.2</commons-collections4.version>
+		<docker.domain>ic-harbor.peter.com</docker.domain>
+		<!-- 配置中心 -->
+		<apollo.version>1.2.0-SNAPSHOT</apollo.version>
+		<spring-boot-admin-starter-client.version>2.0.0</spring-boot-admin-starter-client.version>
+	</properties>
+
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.ctrip.framework.apollo</groupId>
+				<artifactId>apollo-client</artifactId>
+				<version>${apollo.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.peter.search</groupId>
+				<artifactId>peter-search-service-api</artifactId>
+				<version>${search-service.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>${commons-collections4.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${springfox-swagger2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${springfox-swagger2.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- 数据库关联依赖 -->
+			<dependency>
+				<groupId>tk.mybatis</groupId>
+				<artifactId>mapper-spring-boot-starter</artifactId>
+				<version>${mapper-spring-boot-starter.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-core</artifactId>
+				<version>${mybatis-generator-core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.miemiedev</groupId>
+				<artifactId>mybatis-paginator</artifactId>
+				<version>${mybatis-paginator.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${mybatis.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql-connector-java.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.alibaba.rocketmq</groupId>
+				<artifactId>rocketmq-client</artifactId>
+				<version>${rocketmq-client.vserion}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.elasticsearch</groupId>
+				<artifactId>elasticsearch</artifactId>
+				<version>${elasticsearch.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.elasticsearch.client</groupId>
+				<artifactId>elasticsearch-rest-high-level-client</artifactId>
+				<version>${elasticsearch.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.elasticsearch.client</groupId>
+				<artifactId>elasticsearch-rest-client</artifactId>
+				<version>${elasticsearch.version}</version>
+			</dependency>
+			
+			<dependency>
+			<groupId>com.ctrip.framework.apollo</groupId>
+			<artifactId>apollo-client</artifactId>
+			<version>${apollo.version}</version>
+		</dependency>
+		<dependency>
+           <groupId>de.codecentric</groupId>
+           <artifactId>spring-boot-admin-starter-client</artifactId>
+           <version>${spring-boot-admin-starter-client.version}</version>
+        </dependency>
+		</dependencies>	
+	</dependencyManagement>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<profiles.active>dev</profiles.active>
+				<docker.domain>ic-harbor.peter.com</docker.domain>
+				<docker.repo>dev</docker.repo>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>sit</id>
+			<properties>
+				<profiles.active>sit</profiles.active>
+				<docker.domain>ic-harbor.peter.com</docker.domain>
+				<docker.repo>sit</docker.repo>
+			</properties>
+		</profile>
+		<profile>
+			<id>uat</id>
+			<properties>
+				<profiles.active>uat</profiles.active>
+				<docker.domain>ic-harbor.peter.com</docker.domain>
+				<docker.repo>uat</docker.repo>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>sandbox</id>
+			<properties>
+				<profiles.active>sandbox</profiles.active>
+				<docker.domain>harbor.peter.com</docker.domain>
+				<docker.repo>sandbox</docker.repo>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>prod</id>
+			<properties>
+				<profiles.active>prod</profiles.active>
+				<docker.domain>harbor.peter.com</docker.domain>
+				<docker.repo>prod</docker.repo>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>aws</id>
+			<properties>
+			    <activatedProperties>aws</activatedProperties>
+				<profiles.active>aws</profiles.active>
+				<docker.domain>harbor.peter.com</docker.domain>
+				<docker.repo>aws</docker.repo>
+			</properties>
+		</profile>
+	</profiles>
+
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<!-- 当前jar不需要deploy到私服 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.2</version>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<!-- 注意imageName一定要是符合正则[a-z0-9-_.]的，否则构建不会成功 -->
+					<!-- 详见：https://github.com/spotify/docker-maven-plugin Invalid repository 
+						name ... only [a-z0-9-_.] are allowed -->
+					<imageName>${docker.domain}/${docker.repo}/pim-core</imageName>
+					<baseImage>${docker.domain}/ic/jdk1.8</baseImage>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>nexus-releases</name>
+			<url>http://itcentral.peter.cn/nexus/content/repositories/releases/</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>nexus-snapshots</name>
+			<url>http://itcentral.peter.cn/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>bz-nexus</id>
+			<name>bz-nexus</name>
+			<url>http://nexus.peter.com/repository/bz-develop</url>
+			<releases>
+				<enabled>true</enabled>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+		</repository>
+	</repositories>
+</project>

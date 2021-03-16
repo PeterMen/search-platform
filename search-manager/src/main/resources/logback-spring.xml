@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <appender name="search-web-log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>            
+         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE}-%d{yyyy-MM-dd}.log</fileNamePattern>           
+        </rollingPolicy>
+    </appender>
+  <appender name="consOut" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern> %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}
+				-%msg%n   </pattern>
+		</encoder>
+	</appender>
+    <logger name="actionLog" level="INFO">
+        <appender-ref ref="peter-search-web-log"/>
+        <appender-ref ref="consOut"/>
+    </logger>
+
+    <logger name="error" level="INFO">
+        <appender-ref ref="peter-search-web-log"/>
+        <appender-ref ref="consOut"/>
+    </logger>
+
+    <logger name="actionTs" level="INFO">
+        <appender-ref ref="peter-search-web-log"/>
+        <appender-ref ref="consOut"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="peter-search-web-log"/>
+        <appender-ref ref="consOut"/>
+    </root>
+</configuration>
